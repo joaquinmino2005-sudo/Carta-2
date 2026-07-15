@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pregunta</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: #111;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.container { display: none; }
+.active { display: block; }
+
+button {
+  padding: 12px 25px;
+  margin: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+img {
+  max-width: 90%;
+  border-radius: 10px;
+}
+
+/* Carta victoriana */
+.carta {
+  background: #f4ecd8;
+  color: #2b1d0e;
+  padding: 30px;
+  max-width: 500px;
+  border: 3px solid #8b6f47;
+  font-family: "Times New Roman", serif;
+  line-height: 1.6;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PREGUNTA -->
+<div id="pregunta" class="container active">
+  <h1>¿Querés continuar?</h1>
+  <button onclick="irSi()">Sí</button>
+  <button onclick="irNo()">No</button>
+</div>
+
+<!-- BUCLE -->
+<div id="no" class="container">
+  <h2>No es una opción válida...</h2>
+  <button onclick="volver()">Volver</button>
+</div>
+
+<!-- GALERÍA -->
+<div id="galeria" class="container">
+  <img id="imagen" src="https://picsum.photos/400/600?1">
+  <p>(Tocá 4 veces para avanzar)</p>
+</div>
+
+<!-- CARTA -->
+<div id="carta" class="container">
+  <div class="carta">
+    <h2>Mi querida...</h2>
+    <p>
+      En la quietud del tiempo y entre los susurros del destino,
+      he aguardado este instante con una paciencia infinita.
+      Cada paso, cada imagen, no fue más que un camino
+      que conducía a estas palabras.
+    </p>
+    <p>
+      Si has llegado hasta aquí, es porque elegiste,
+      y en esa elección, encontré algo eterno.
+    </p>
+    <p>Con devoción, siempre tuyo.</p>
+  </div>
+</div>
+
+<script>
+let index = 1;
+let taps = 0;
+const totalImagenes = 4;
+
+function mostrar(id) {
+  document.querySelectorAll(".container").forEach(c => c.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function irSi() {
+  mostrar("galeria");
+}
+
+function irNo() {
+  mostrar("no");
+}
+
+function volver() {
+  mostrar("pregunta");
+}
+
+document.getElementById("galeria").addEventListener("click", () => {
+  taps++;
+
+  if (taps >= 4) {
+    taps = 0;
+    index++;
+
+    if (index > totalImagenes) {
+      mostrar("carta");
+      return;
+    }
+
+    document.getElementById("imagen").src =
+      `https://picsum.photos/400/600?random=${index}`;
+  }
+});
+</script>
+
+</body>
+</html>
